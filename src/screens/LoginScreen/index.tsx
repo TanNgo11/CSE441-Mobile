@@ -31,7 +31,7 @@ const LoginScreen = () => {
         console.error("Failed to save access token:", error);
       });
       setTokens(accessToken, refreshToken);
-
+      //test
       if (accessToken) {
         onGetUserInfo().catch((error) => {
           console.error("Failed to get user info:", error);
