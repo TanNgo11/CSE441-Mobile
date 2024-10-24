@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { FlatList, Image, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import { useGetListProducts } from "queries/product/useGetListProducts";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
@@ -20,6 +21,7 @@ const HomeScreen: React.FC = () => {
   const theme = useTheme();
   const { colors } = theme;
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { data } = useGetListProducts();
 
   const handleItemPress = () => {
     NavigationService.push(SCREENS.DETAIL);
@@ -54,7 +56,7 @@ const HomeScreen: React.FC = () => {
   const renderList = () => (
     <View style={styles.listContainer}>
       <FlatList
-        data={MockData}
+        data={data}
         renderItem={({ item }) => (
           <CardItem data={item} onPress={handleItemPress} />
         )}

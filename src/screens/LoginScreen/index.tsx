@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert } from "react-native";
 import { LoginKey } from "queries/auth/keys";
 import { useGetUserInfo } from "queries/auth/useGetUserInfo";
