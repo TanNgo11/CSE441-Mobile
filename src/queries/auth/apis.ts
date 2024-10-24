@@ -1,8 +1,9 @@
+import { VITE_BASE_URL } from "@env";
 import { useHttpPrivateRequest } from "@services/httpRequest/useHttpPrivateRequest";
 import useHttpPublicRequest from "@services/httpRequest/useHttpPublicRequest ";
 import { LoginPayload } from "./types";
 
-const useApi = (baseURL = "http://10.0.2.2:8080") => {
+const useApi = (baseURL = VITE_BASE_URL) => {
   const publicApi = useHttpPublicRequest(baseURL);
   const privateApi = useHttpPrivateRequest(baseURL);
 
