@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useGetListProducts } from "queries/Product/useGetListProducts";
+import { useGetListProducts } from "queries/product/useGetListProducts";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";

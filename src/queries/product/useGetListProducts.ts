@@ -1,8 +1,8 @@
 import { ApiResponseListType, responseWrapper } from "queries/helpers";
 import { API_QUERIES } from "queries/keys";
+import { ProductResponseType } from "queries/product/types";
 import { useQuery, useQueryClient, UseQueryOptions } from "react-query";
 import { productApi } from ".";
-import { ProductResponseType } from "./types";
 
 export function useGetListProducts(
   options?: UseQueryOptions<
