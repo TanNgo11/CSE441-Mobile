@@ -1,7 +1,6 @@
 import React from "react";
 import { LogBox, StatusBar, useColorScheme } from "react-native";
 import "react-native-gesture-handler";
-import { ONE_HOUR } from "config/constants";
 import SplashScreen from "react-native-splash-screen";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createTamagui, TamaguiProvider } from "tamagui";
@@ -10,7 +9,8 @@ import { isAndroid } from "@freakycoder/react-native-helpers";
  * ? Local Imports
  */
 import defaultConfig from "@tamagui/config/v3";
-import Navigation from "./src/navigation"
+import { ONE_HOUR } from "./src/config/constants";
+import Navigation from "./src/navigation";
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -11,9 +11,9 @@ import {
   type ViewStyle,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { ProductResponseType } from "queries/Product/types";
-import { useGetProductById } from "queries/Product/useGetProductById";
-import { useGetRatingsProductById } from "queries/Product/useGetRatingsProductById";
+import { ProductResponseType } from "queries/product/types";
+import { useGetProductById } from "queries/product/useGetProductById";
+import { useGetRatingsProductById } from "queries/product/useGetRatingsProductById";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 import RNBounceable from "@freakycoder/react-native-bounceable";
@@ -94,6 +94,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
         </View>
 
         <View
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
@@ -103,6 +104,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
           <View
             style={[
               styles.ratingBadge,
+              // eslint-disable-next-line react-native/no-inline-styles
               { flexDirection: "row", alignItems: "center" },
             ]}
           >
