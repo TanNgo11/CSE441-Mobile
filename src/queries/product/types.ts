@@ -24,3 +24,5 @@ export interface CategoryResponseType {
   description: string;
   status: string;
 }
+
+export interface RatingsResponseType {}

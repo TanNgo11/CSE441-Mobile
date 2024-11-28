@@ -9,8 +9,17 @@ const useApi = (baseURL = VITE_BASE_URL) => {
     return publicApi.get("/api/v1/products", {});
   };
 
+  const getProductById = (id: number) => {
+    return publicApi.get(`/api/v1/products/${id}`, {});
+  };
+
+  const getRatingById = (id: number) => {
+    return publicApi.get(`/api/v1/ratings/average/${id}`, {});
+  };
   return {
     getListProducts,
+    getProductById,
+    getRatingById,
   };
 };
 

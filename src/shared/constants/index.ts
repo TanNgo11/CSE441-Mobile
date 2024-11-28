@@ -2,7 +2,7 @@
 export const SCREENS = {
   ROOT: "Root",
   HOME: "Home",
-  SEARCH: "Search",
+  CART: "Cart",
   NOTIFICATION: "Notification",
   PROFILE: "Profile",
   DETAIL: "Detail",

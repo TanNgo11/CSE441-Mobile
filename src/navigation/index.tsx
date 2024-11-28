@@ -5,12 +5,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { isReadyRef, navigationRef } from "react-navigation-helpers";
+import CartScreen from "@screens/cart/CartScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
 // ? Screens
 import HomeScreen from "@screens/home/HomeScreen";
 import LoginScreen from "@screens/LoginScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
-import SearchScreen from "@screens/search/SearchScreen";
 /**
  * ? Local & Shared Imports
  */
@@ -40,8 +40,8 @@ const Navigation = () => {
       case SCREENS.HOME:
         iconName = focused ? "home" : "home-outline";
         break;
-      case SCREENS.SEARCH:
-        iconName = focused ? "search" : "search-outline";
+      case SCREENS.CART:
+        iconName = focused ? "cart" : "cart-outline";
         break;
       case SCREENS.NOTIFICATION:
         iconName = focused ? "notifications" : "notifications-outline";
@@ -78,11 +78,11 @@ const Navigation = () => {
         })}
       >
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
-        <Tab.Screen name={SCREENS.SEARCH} component={SearchScreen} />
         <Tab.Screen
           name={SCREENS.NOTIFICATION}
           component={NotificationScreen}
         />
+        <Tab.Screen name={SCREENS.CART} component={CartScreen} />
         <Tab.Screen name={SCREENS.LOGIN} component={LoginScreen} />
       </Tab.Navigator>
     );
