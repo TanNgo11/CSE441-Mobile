@@ -10,7 +10,7 @@ import { isAndroid } from "@freakycoder/react-native-helpers";
  * ? Local Imports
  */
 import defaultConfig from "@tamagui/config/v3";
-import Navigation from "./src/navigation";
+import Navigation from "./src/navigation"
 
 const queryClient = new QueryClient({
   defaultOptions: {
