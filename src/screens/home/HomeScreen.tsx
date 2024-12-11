@@ -1,10 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useMemo, useState } from "react";
 import {
   FlatList,
-  Image,
   ScrollView,
   TextInput,
-  Touchable,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -13,14 +12,11 @@ import { useGetListProducts } from "queries/product/useGetListProducts";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as NavigationService from "react-navigation-helpers";
-import fonts from "@fonts";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-import { SearchBar } from "@rneui/themed";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import { SCREENS } from "@shared-constants";
 import CardItem from "./components/card-item/CardItem";
 import createStyles from "./HomeScreen.style";
-import MockData from "./mock/MockData";
 
 type SearchBarComponentProps = {};
 
@@ -50,10 +46,6 @@ const HomeScreen: React.FC = () => {
   const handleItemPress = (id: number) => {
     NavigationService.push(SCREENS.DETAIL, { productId: id });
   };
-
-  /* -------------------------------------------------------------------------- */
-  /*                               Render Methods                               */
-  /* -------------------------------------------------------------------------- */
 
   const renderMenuButton = () => (
     <RNBounceable>

@@ -86,6 +86,8 @@ export default () => {
       paddingVertical: 2,
       width: 50,
       zIndex: 1,
+      flexDirection: "row",
+      alignItems: "center",
     },
     ratingText: {
       color: "white",

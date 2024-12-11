@@ -8,5 +8,6 @@ export const SCREENS = {
   PROFILE: "Profile",
   DETAIL: "Detail",
   LOGIN: "Login",
+  CHECKOUT: "Checkout",
   EDITPROFILE: "EditProfile",
 };
