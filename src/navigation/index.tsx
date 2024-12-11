@@ -7,10 +7,15 @@ import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import { isReadyRef, navigationRef } from "react-navigation-helpers";
 import CartScreen from "@screens/cart/CartScreen";
 import DetailScreen from "@screens/detail/DetailScreen";
+import EditProfile from "@screens/editprofile/EditProfile";
 // ? Screens
 import HomeScreen from "@screens/home/HomeScreen";
 import LoginScreen from "@screens/LoginScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
+
+import SearchScreen from "@screens/search/SearchScreen";
+
+import ProfileScreen from "@screens/profile/ProfileScreen";
 /**
  * ? Local & Shared Imports
  */
@@ -62,7 +67,6 @@ const Navigation = () => {
       />
     );
   };
-
   const renderTabNavigation = () => {
     return (
       <Tab.Navigator
@@ -83,6 +87,7 @@ const Navigation = () => {
           component={NotificationScreen}
         />
         <Tab.Screen name={SCREENS.CART} component={CartScreen} />
+        <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
         <Tab.Screen name={SCREENS.LOGIN} component={LoginScreen} />
       </Tab.Navigator>
     );
@@ -100,6 +105,9 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.ROOT} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name={SCREENS.EDITPROFILE}>
+          {(props) => <EditProfile {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

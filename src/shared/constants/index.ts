@@ -1,3 +1,4 @@
+
 // ? Screens
 export const SCREENS = {
   ROOT: "Root",
@@ -7,4 +8,5 @@ export const SCREENS = {
   PROFILE: "Profile",
   DETAIL: "Detail",
   LOGIN: "Login",
+  EDITPROFILE: "EditProfile",
 };
