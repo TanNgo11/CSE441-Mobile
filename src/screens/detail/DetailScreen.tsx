@@ -2,21 +2,15 @@
  * ? Local Imports
  */
 import React, { useMemo, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
-  View,
-  type StyleProp,
-  type ViewStyle,
-} from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { ProductResponseType } from "queries/product/types";
 import { useGetProductById } from "queries/product/useGetProductById";
 import { useGetRatingsProductById } from "queries/product/useGetRatingsProductById";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import Toast from "react-native-toast-message";
 import * as NavigationService from "react-navigation-helpers";
-import RNBounceable from "@freakycoder/react-native-bounceable";
+import { useShoppingCartStore } from "zustand/auth/useCartStore";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import createStyles from "./DetailScreen.style";
 
@@ -27,6 +21,7 @@ interface DetailScreenProps {
 }
 const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
   const { productId } = route.params;
+  const { putItemInCartWithQuantity } = useShoppingCartStore();
   const { data, isFetching, error } = useGetProductById(productId);
   const { data: ratings, isFetching: isFetchingRatings } =
     useGetRatingsProductById(productId);
@@ -65,7 +60,15 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
   const categoryName = category?.name || "No Category";
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} x ${name} to cart`);
+    Toast.show({
+      type: "success",
+      text1: "success",
+      text2: "Add to cart successfully",
+      autoHide: true,
+      visibilityTime: 3000,
+    });
+    putItemInCartWithQuantity(data.id, quantity);
+    setQuantity(1);
   };
   return (
     <View style={styles.container}>
@@ -90,7 +93,12 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
         <Text style={styles.categoryText}>{categoryName}</Text>
         <View style={styles.secondaryContainer}>
           <Text style={styles.productName}>{name}</Text>
-          <Text style={styles.priceText}>${salePrice.toFixed(2)}</Text>
+          <Text style={styles.priceText}>
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(salePrice)}
+          </Text>
         </View>
 
         <View
@@ -137,16 +145,14 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
               style={styles.quantityButton}
               onPress={() => setQuantity(quantity + 1)}
             >
-              <Text style={[styles.quantityButtonText, { color: "#000000" }]}>
+              <Text color="black" style={[styles.quantityButtonText]}>
                 +
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text
-          style={[styles.descriptionText, { marginTop: 10, fontWeight: 700 }]}
-        >{`DESCRIPTIONS`}</Text>
+        <Text style={[styles.descriptionText]}>{`DESCRIPTIONS`}</Text>
         <Text style={styles.descriptionText}>{description}</Text>
 
         <TouchableOpacity

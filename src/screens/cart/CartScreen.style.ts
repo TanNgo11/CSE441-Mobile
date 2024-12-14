@@ -130,15 +130,15 @@ const createStyles = (theme: typeof DefaultTheme) =>
     itemName: {
       fontSize: 16,
       fontWeight: "bold",
-      color: theme.colors.text,
+      color: "black",
     },
     itemPrice: {
       fontSize: 14,
-      color: theme.colors.text,
+      color: "black",
     },
     itemQuantity: {
       fontSize: 14,
-      color: theme.colors.text,
+      color: "black",
     },
     removeButton: {
       marginLeft: 10,
@@ -216,11 +216,13 @@ const createStyles = (theme: typeof DefaultTheme) =>
     },
     labelText: {
       fontSize: 16,
-      color: "#000",
+      color: "#F44C00",
+      fontWeight: "bold",
     },
     valueText: {
       fontSize: 16,
-      color: "#000",
+      color: "#F44C00",
+      fontWeight: "bold",
     },
   });
 

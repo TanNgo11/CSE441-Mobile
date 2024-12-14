@@ -13,6 +13,12 @@ const useApi = (baseURL = VITE_BASE_URL) => {
     return publicApi.get(`/api/v1/products/${id}`, {});
   };
 
+  const getListProductsByIds = (ids: number[]) => {
+    return publicApi.get("/api/v1/products/list", {
+      params: { ids: ids.join(",") },
+    });
+  };
+
   const getRatingById = (id: number) => {
     return publicApi.get(`/api/v1/ratings/average/${id}`, {});
   };
@@ -20,6 +26,7 @@ const useApi = (baseURL = VITE_BASE_URL) => {
     getListProducts,
     getProductById,
     getRatingById,
+    getListProductsByIds,
   };
 };
 

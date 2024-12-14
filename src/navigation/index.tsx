@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
+import Toast from "react-native-toast-message";
 import { isReadyRef, navigationRef } from "react-navigation-helpers";
 import CartScreen from "@screens/cart/CartScreen";
+import CheckoutScreen from "@screens/Checkout";
 import DetailScreen from "@screens/detail/DetailScreen";
 import EditProfile from "@screens/editprofile/EditProfile";
 // ? Screens
@@ -22,7 +24,6 @@ import ProfileScreen from "@screens/profile/ProfileScreen";
 import { SCREENS } from "@shared-constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
 
-// ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -30,16 +31,22 @@ const Navigation = () => {
   const scheme = useColorScheme();
   const isDarkMode = scheme === "dark";
 
-  React.useEffect((): any => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
+
+  useEffect(() => {
+    // Simulate authentication check
+    const checkAuthentication = async () => {
+      // Replace with your real authentication logic
+      const loggedIn = await Promise.resolve(false); // Example: user is not logged in
+      setIsAuthenticated(loggedIn);
+    };
+
+    checkAuthentication();
+
     return () => (isReadyRef.current = false);
   }, []);
 
-  const renderTabIcon = (
-    route: any,
-    focused: boolean,
-    color: string,
-    size: number,
-  ) => {
+  const renderTabIcon = (route, focused, color, size) => {
     let iconName = "home";
     switch (route.name) {
       case SCREENS.HOME:
@@ -101,7 +108,11 @@ const Navigation = () => {
       }}
       theme={isDarkMode ? DarkTheme : LightTheme}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName={isAuthenticated ? SCREENS.ROOT : SCREENS.LOGIN} // Dynamically set initial route
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
         <Stack.Screen name={SCREENS.ROOT} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
@@ -109,6 +120,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.EDITPROFILE}>
           {(props) => <EditProfile {...props} />}
         </Stack.Screen>
+        <Stack.Screen component={CheckoutScreen} name={SCREENS.CHECKOUT} />
       </Stack.Navigator>
     </NavigationContainer>
   );

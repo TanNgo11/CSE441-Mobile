@@ -29,65 +29,71 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import { ProductResponseType } from "queries/product/types";
+import { useGetListProductsByIds } from "queries/product/useGetListProductsByIds";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
+import useCurrencyFormatter from "utils/useCurrencyFormatter";
+import { useShoppingCartStore } from "zustand/auth/useCartStore";
 import RNBounceable from "@freakycoder/react-native-bounceable";
+import { SCREENS } from "@shared-constants";
 import createStyles from "./CartScreen.style";
-
-/**
- * Mocked cart data - replace this with real data from your state or API.
- */
-const mockCartItems = [
-  {
-    id: 1,
-    name: "Watermelon",
-    price: 10.0,
-    quantity: 2,
-    image: "https://askbootstrap.com/preview/groseri/img/1.jpeg",
-  },
-  {
-    id: 2,
-    name: "Orange",
-    price: 5.0,
-    quantity: 3,
-    image: "https://askbootstrap.com/preview/groseri/img/2.jpeg",
-  },
-  {
-    id: 3,
-    name: "Noodle",
-    price: 13.0,
-    quantity: 1,
-    image: "https://askbootstrap.com/preview/groseri/img/1.jpeg",
-  },
-];
 
 const CartScreen: React.FC = () => {
   const theme = useTheme();
-  const { colors } = theme;
+  const navigation = useNavigation();
+  const currencyFormat = useCurrencyFormatter();
+  const { cartItems, increaseItemQuantity, decreaseItemQuantity } =
+    useShoppingCartStore();
+
+  const { data: products } = useGetListProductsByIds(
+    cartItems.map((item) => item.id),
+  );
+
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const [quantity, setQuantity] = useState(1);
+
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
 
-  const handleRemoveItem = (itemId: number) => {
-    console.log(`Remove item with id: ${itemId}`);
-  };
+  const totalAmount = useMemo(() => {
+    return cartItems.reduce((acc, item) => {
+      const product = products?.find((p) => p.id === item.id);
+      const price = product?.price || 0;
+      return acc + price * item.quantity;
+    }, 0);
+  }, [cartItems, products]);
 
-  const totalAmount = mockCartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
+  const mergedData: ProductResponseType[] = useMemo(() => {
+    return cartItems.map((cartItem) => {
+      const product = products?.find((p) => p.id === cartItem.id);
+
+      return {
+        id: cartItem.id,
+        modifiedDate: product?.modifiedDate || "",
+        modifiedBy: product?.modifiedBy || "",
+        name: product?.name || "Unknown Product",
+        description: product?.description || "",
+        price: product?.price || 0,
+        salePrice: product?.salePrice || 0,
+        quantity: cartItem.quantity,
+        image: product?.image || "",
+        slug: product?.slug || "",
+        ratings: product?.ratings || 0,
+        productStatus: product?.productStatus || "Unavailable",
+        category: product?.category || null,
+      } as ProductResponseType;
+    });
+  }, [cartItems, products]);
 
   const handleApplyCoupon = () => {
     if (coupon.toLowerCase() === "discount10") {
-      setDiscount(totalAmount * 0.1);
+      if (totalAmount) {
+        setDiscount(totalAmount * 0.1);
+      }
     } else {
       setDiscount(0);
     }
-  };
-  const handleCheckout = () => {
-    console.log("Proceed to checkout");
   };
 
   const renderHeader = () => (
@@ -110,27 +116,38 @@ const CartScreen: React.FC = () => {
   const renderItems = () => (
     <>
       <FlatList
-        data={mockCartItems}
+        data={mergedData}
+        extraData={cartItems}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <RNBounceable>
             <View style={styles.cartItem}>
-              <Image source={{ uri: item.image }} style={styles.itemImage} />
+              <Image source={{ uri: item?.image }} style={styles.itemImage} />
               <View style={styles.itemDetails}>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+                <Text style={styles.itemName}>{item?.name}</Text>
+                <Text style={styles.itemPrice}>
+                  {currencyFormat(item?.price)}
+                </Text>
                 <Text style={styles.itemQuantity}>
                   Quantity: {item.quantity}
                 </Text>
               </View>
               <TouchableOpacity
                 style={styles.removeButton}
-                onPress={() => handleRemoveItem(item.id)}
+                onPress={() => decreaseItemQuantity(item.id)}
               >
                 <Icon
                   name="remove-outline"
                   type={IconType.Ionicons}
                   color="#FF0000"
+                  size={25}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => increaseItemQuantity(item.id)}>
+                <Icon
+                  name="add-outline"
+                  type={IconType.Ionicons}
+                  color="black"
                   size={25}
                 />
               </TouchableOpacity>
@@ -159,24 +176,24 @@ const CartScreen: React.FC = () => {
       {renderCouponSection()}
       <View style={styles.row}>
         <Text style={styles.labelText}>Subtotal:</Text>
-        <Text style={styles.valueText}>${totalAmount.toFixed(2)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={[styles.labelText, { color: "#F44C00" }]}>Discount:</Text>
-        <Text style={[styles.valueText, { color: "#F44C00" }]}>
-          -${discount.toFixed(2)}
+        <Text style={styles.valueText}>
+          {currencyFormat(Number(totalAmount?.toFixed(2)))}
         </Text>
       </View>
       <View style={styles.row}>
-        <Text style={[styles.labelText, { fontWeight: "bold" }]}>Total:</Text>
-        <Text style={[styles.valueText, { fontWeight: "bold" }]}>
-          ${(totalAmount - discount).toFixed(2)}
+        <Text style={[styles.labelText]}>Discount:</Text>
+        <Text style={[styles.valueText]}>-${discount.toFixed(2)}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={[styles.labelText]}>Total:</Text>
+        <Text style={[styles.valueText]}>
+          {/* ${(totalAmount?.toFixed(2) - discount).toFixed(2)} */}
         </Text>
       </View>
       <RNBounceable>
         <TouchableOpacity
           style={styles.checkoutButton}
-          onPress={() => console.log("Proceed to checkout")}
+          onPress={() => navigation.navigate({ name: SCREENS.CHECKOUT })}
         >
           <Text style={styles.checkoutText}>Proceed to Checkout</Text>
         </TouchableOpacity>

@@ -2,6 +2,7 @@ import React from "react";
 import { LogBox, StatusBar, useColorScheme } from "react-native";
 import "react-native-gesture-handler";
 import SplashScreen from "react-native-splash-screen";
+import Toast from "react-native-toast-message";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createTamagui, TamaguiProvider } from "tamagui";
 import { isAndroid } from "@freakycoder/react-native-helpers";
@@ -56,6 +57,7 @@ const App = () => {
           <Navigation />
         </TamaguiProvider>
       </QueryClientProvider>
+      <Toast position="top" />
     </>
   );
 };

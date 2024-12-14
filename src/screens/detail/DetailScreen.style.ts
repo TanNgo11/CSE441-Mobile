@@ -4,7 +4,6 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native";
-import { ScreenHeight, ScreenWidth } from "@freakycoder/react-native-helpers";
 
 interface Style {
   container: ViewStyle;
@@ -99,6 +98,8 @@ export default () => {
     descriptionText: {
       fontSize: 16,
       color: "#000000",
+      marginTop: 10,
+      fontWeight: 700,
     },
     quantityContainer: {
       flexDirection: "row",
