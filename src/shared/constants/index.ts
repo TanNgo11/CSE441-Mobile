@@ -4,7 +4,7 @@ export const SCREENS = {
   ROOT: "Root",
   HOME: "Home",
   CART: "Cart",
-  NOTIFICATION: "Notification",
+  ADDUSER: "AddUser",
   PROFILE: "Profile",
   DETAIL: "Detail",
   LOGIN: "Login",

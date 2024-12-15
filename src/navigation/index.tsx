@@ -12,10 +12,9 @@ import EditProfile from "@screens/editprofile/EditProfile";
 import HomeScreen from "@screens/home/HomeScreen";
 import LoginScreen from "@screens/LoginScreen";
 import NotificationScreen from "@screens/notification/NotificationScreen";
-
-import SearchScreen from "@screens/search/SearchScreen";
-
 import ProfileScreen from "@screens/profile/ProfileScreen";
+import AddUser from "adduser/AddUser";
+
 /**
  * ? Local & Shared Imports
  */
@@ -48,7 +47,7 @@ const Navigation = () => {
       case SCREENS.CART:
         iconName = focused ? "cart" : "cart-outline";
         break;
-      case SCREENS.NOTIFICATION:
+      case SCREENS.ADDUSER:
         iconName = focused ? "notifications" : "notifications-outline";
         break;
       case SCREENS.PROFILE:
@@ -83,8 +82,8 @@ const Navigation = () => {
       >
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen
-          name={SCREENS.NOTIFICATION}
-          component={NotificationScreen}
+          name={SCREENS.ADDUSER}
+          component={AddUser}
         />
         <Tab.Screen name={SCREENS.CART} component={CartScreen} />
         <Tab.Screen name={SCREENS.PROFILE} component={ProfileScreen} />

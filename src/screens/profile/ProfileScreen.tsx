@@ -8,20 +8,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useGetUserInfo } from "queries/auth/useGetUserInfo";
+import Icon, { IconType } from "react-native-dynamic-vector-icons";
 import LinearGradient from "react-native-linear-gradient";
-import Icon,{ IconType } from "react-native-dynamic-vector-icons";
 import * as NavigationService from "react-navigation-helpers";
 import { SCREENS } from "@shared-constants";
 import styles from "./ProfileScreen.style";
-import {useGetUserInfo} from "queries/auth/useGetUserInfo";
 
 const ProfileScreen = () => {
-  const { data: userinfo, isFetching, isError, onGetUserInfo } = useGetUserInfo();
-
+  const {
+    data: userinfo,
+    isFetching,
+    isError,
+    onGetUserInfo,
+  } = useGetUserInfo();
 
   const handleItemPress = (id: number) => {
     NavigationService.push(SCREENS.EDITPROFILE, { useriD: id });
-
   };
   if (isFetching) {
     return <Text>Loading...</Text>;
@@ -40,16 +43,14 @@ const ProfileScreen = () => {
           style={styles.header}
         >
           <TouchableOpacity
-          style={styles.goBack}
-        onPress={() => NavigationService.goBack()}
-      >
-        <Icon
-          name="arrow-back-sharp"
-          type={IconType.Ionicons}
-          size={35}
-        />
-      </TouchableOpacity>
-          <Text style={styles.name}>{userinfo.firstName+"  "+ userinfo.lastName|| "Anonymous"}</Text>
+            style={styles.goBack}
+            onPress={() => NavigationService.goBack()}
+          >
+            <Icon name="arrow-back-sharp" type={IconType.Ionicons} size={35} />
+          </TouchableOpacity>
+          <Text style={styles.name}>
+            {userinfo.firstName + "  " + userinfo.lastName || "Anonymous"}
+          </Text>
           <Text style={styles.role}>{userinfo.username || "User"}</Text>
           <Text style={styles.location}>
             <Icon name="map-marker" type={IconType.FontAwesome} size={14} />{" "}
@@ -65,8 +66,16 @@ const ProfileScreen = () => {
           <View style={styles.statsRow}>
             <View>
               <Text style={styles.iconButton}>
-                <Icon name="phone" type={IconType.FontAwesome} size={20} color="#FF7E5F" />
-                <Text> {"\t"} {userinfo.phoneNumber || "No phone available"}</Text>
+                <Icon
+                  name="phone"
+                  type={IconType.FontAwesome}
+                  size={20}
+                  color="#FF7E5F"
+                />
+                <Text>
+                  {" "}
+                  {"\t"} {userinfo.phoneNumber || "No phone available"}
+                </Text>
               </Text>
             </View>
           </View>
@@ -83,19 +92,29 @@ const ProfileScreen = () => {
         {/* Additional Info */}
         <View style={styles.infoSection}>
           <Text style={styles.infoItem}>
-            <Icon name="envelope" type={IconType.FontAwesome} size={14} /> {userinfo.email || "N/A"}
+            <Icon name="envelope" type={IconType.FontAwesome} size={14} />{" "}
+            {userinfo.email || "N/A"}
           </Text>
           <Text style={styles.infoItem}>
-            <Icon name="birthday-cake" type={IconType.FontAwesome} size={14} />{" "+ userinfo.dateOfBirth || "Unknown"}
+            <Icon name="birthday-cake" type={IconType.FontAwesome} size={14} />
+            {" " + userinfo.dateOfBirth || "Unknown"}
           </Text>
           <Text style={styles.infoItem}>
-            <Icon name="transgender"  type={IconType.FontAwesome}size={14} /> {userinfo.gender || "Not specified"}
+            <Icon name="transgender" type={IconType.FontAwesome} size={14} />{" "}
+            {userinfo.gender || "Not specified"}
           </Text>
         </View>
 
         {/* Follow Button */}
         <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.editButtonText} onPress={()=>{handleItemPress(userinfo.id)}}>Edit</Text>
+          <Text
+            style={styles.editButtonText}
+            onPress={() => {
+              handleItemPress(userinfo.id);
+            }}
+          >
+            Edit
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -104,12 +123,10 @@ const ProfileScreen = () => {
 
 export default ProfileScreen;
 
-
 // const { data, onGetUserInfo } = useGetUserInfo();
 
 // const ProfileScreen = () => {
 
- 
 //   // const [username, setUsername] = useState("");
 //   // const [firstName, setFirstName] = useState("");
 //   // const [lastName, setLastName] = useState("");
