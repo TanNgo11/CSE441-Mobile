@@ -15,6 +15,13 @@ const useApi = (baseURL = VITE_BASE_URL) => {
     return privateApi.get("/api/v1/users/myInfo");
   };
 
+  const getListUser = () => {
+    return privateApi.get("/api/v1/users");
+  };
+
+  const getUserById = (id: number) => {
+    return privateApi.get(`/api/v1/users/${id}`, {});
+  };
   const getRefreshToken = () => {
     return publicApi.post("/api/v1/auth/refresh");
   };
@@ -23,6 +30,8 @@ const useApi = (baseURL = VITE_BASE_URL) => {
     authenticate,
     getUserInfo,
     getRefreshToken,
+    getListUser,
+    getUserById,
   };
 };
 

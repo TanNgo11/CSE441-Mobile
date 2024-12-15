@@ -16,6 +16,13 @@ import NotificationScreen from "@screens/notification/NotificationScreen";
  */
 import { SCREENS } from "@shared-constants";
 import { DarkTheme, LightTheme, palette } from "@theme/themes";
+import LineChartExample from "@screens/chart/LineChartExample";
+import TableProductScreen from "@screens/tableproduct/TableProductScreen";
+import DetailProductAdmin from "@screens/tableproduct/DetailProductAdmin";
+import TableUserScreen from "@screens/tableuser/TableUserScreen";
+import EditProfile from "@screens/editprofile/EditProfile";
+import EditUser from "@screens/tableuser/EditUser";
+import RegisterScreen from "@screens/RegisterScreen/RegisterScreen";
 
 // ? If you want to use stack or tab or both
 const Tab = createBottomTabNavigator();
@@ -43,11 +50,23 @@ const Navigation = () => {
       case SCREENS.CART:
         iconName = focused ? "cart" : "cart-outline";
         break;
-      case SCREENS.NOTIFICATION:
-        iconName = focused ? "notifications" : "notifications-outline";
+      // case SCREENS.NOTIFICATION:
+      //   iconName = focused ? "notifications" : "notifications-outline";
+      //   break;
+      case SCREENS.LINECHARTEXAMPLE:
+        iconName = focused ? "cellular" : "cellular-outline";
+        break;
+      case SCREENS.TABLEPRODUCT:
+        iconName = focused ? "browsers" : "browsers-outline";
+        break;
+      case SCREENS.TABLEUSERSCREEN:
+        iconName = focused ? "browsers" : "browsers-outline";
         break;
       case SCREENS.PROFILE:
         iconName = focused ? "person" : "person-outline";
+        break;
+      case SCREENS.REGISTERSCREEN:
+        iconName = focused ? "person" : "person";
         break;
       default:
         iconName = focused ? "home" : "home-outline";
@@ -79,11 +98,15 @@ const Navigation = () => {
       >
         <Tab.Screen name={SCREENS.HOME} component={HomeScreen} />
         <Tab.Screen
-          name={SCREENS.NOTIFICATION}
-          component={NotificationScreen}
+          name={SCREENS.LINECHARTEXAMPLE}
+          component={LineChartExample}
+        />
+        <Tab.Screen
+          name={SCREENS.TABLEPRODUCT}
+          component={TableProductScreen}
         />
         <Tab.Screen name={SCREENS.CART} component={CartScreen} />
-        <Tab.Screen name={SCREENS.LOGIN} component={LoginScreen} />
+        <Tab.Screen name={SCREENS.REGISTERSCREEN} component={RegisterScreen} />
       </Tab.Navigator>
     );
   };
@@ -100,6 +123,15 @@ const Navigation = () => {
         <Stack.Screen name={SCREENS.ROOT} component={renderTabNavigation} />
         <Stack.Screen name={SCREENS.DETAIL}>
           {(props) => <DetailScreen {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name={SCREENS.DETAILPRODUCTADMIN}>
+          {(props) => <DetailProductAdmin {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name={SCREENS.EDITPROFILE}>
+          {(props) => <EditProfile {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name={SCREENS.EDITUSER}>
+          {(props) => <EditUser {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

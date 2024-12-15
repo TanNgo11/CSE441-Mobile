@@ -10,12 +10,11 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { ProductResponseType } from "queries/product/types";
 import { useGetProductById } from "queries/product/useGetProductById";
 import { useGetRatingsProductById } from "queries/product/useGetRatingsProductById";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import * as NavigationService from "react-navigation-helpers";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import Text from "@shared-components/text-wrapper/TextWrapper";
 import createStyles from "./DetailScreen.style";
@@ -26,6 +25,8 @@ interface DetailScreenProps {
   ratings: number;
 }
 const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
+  const navigation = useNavigation();
+
   const { productId } = route.params;
   const { data, isFetching, error } = useGetProductById(productId);
   const { data: ratings, isFetching: isFetchingRatings } =
@@ -71,7 +72,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.goBack}
-        onPress={() => NavigationService.goBack()}
+        onPress={() => navigation.goBack()}
       >
         <Icon
           name="arrow-back-sharp"

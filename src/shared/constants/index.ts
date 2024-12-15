@@ -7,4 +7,12 @@ export const SCREENS = {
   PROFILE: "Profile",
   DETAIL: "Detail",
   LOGIN: "Login",
+  LINECHARTEXAMPLE : "LineChartExample",
+  TABLEPRODUCT : "TableProduct",
+  DETAILPRODUCTADMIN : "DetailProductAdmin",
+  TABLEUSERSCREEN : "TableUserScreen",
+  EDITPROFILE: "EditProfile",
+  EDITUSER: "EditUser",
+  REGISTERSCREEN : "RegisterScreen",
+
 };

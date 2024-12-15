@@ -21,12 +21,18 @@ const LoginScreen = () => {
   const { onLogin } = useLogin({
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data.result;
-      Alert.alert("Login Success", "You have successfully logged in", [
-        {
-          text: accessToken,
-          onPress: () => console.log("OK Pressed"),
-        },
-      ]);
+      Alert.alert(
+        "Login Success",
+        `You have successfully logged`, 
+        [
+          {
+            text: "OK",
+            onPress: () => console.log("OK Pressed"),
+          },
+        ],
+        { cancelable: true }
+      );
+      
       AsyncStorage.setItem("accessToken", accessToken).catch((error) => {
         console.error("Failed to save access token:", error);
       });

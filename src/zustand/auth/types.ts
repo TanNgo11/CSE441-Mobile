@@ -10,6 +10,8 @@ export type User = {
   dateOfBirth: Date;
   status: UserStatus;
   avatar: string;
+  createdDate: Date;
+  password: string;
   roles?: Role;
 };
 export enum UserStatus {
